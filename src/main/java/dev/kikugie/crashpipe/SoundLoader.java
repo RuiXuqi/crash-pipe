@@ -1,8 +1,8 @@
-package dev.kikugie.crash_pipe;
+package dev.kikugie.crashpipe;
 
-import net.fabricmc.loader.api.FabricLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.minecraftforge.fml.common.Loader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -13,8 +13,8 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 public class SoundLoader {
-    private static final Logger LOGGER = LoggerFactory.getLogger("Crash Pipe");
-    private static final Path SOUND = FabricLoader.getInstance().getConfigDir().resolve("crash-pipe/crash.wav");
+    private static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
+    private static final Path SOUND = Loader.instance().getConfigDir().toPath().resolve("crashpipe/crash.wav");
     private static Clip clip;
 
     public static void init() {
@@ -24,7 +24,7 @@ public class SoundLoader {
                 clip = AudioSystem.getClip();
                 clip.open(is);
             } catch (Exception e) {
-                LOGGER.error("Couldn't load clip %s: %s".formatted(SOUND, e.getMessage()));
+                LOGGER.error("Couldn't load clip {} : {}",SOUND, e.getMessage());
             }
         });
     }
@@ -52,7 +52,7 @@ public class SoundLoader {
     }
 
     private static void moveResource() {
-        try (InputStream is = SoundLoader.class.getClassLoader().getResourceAsStream("crash-pipe/crash.wav")) {
+        try (InputStream is = SoundLoader.class.getClassLoader().getResourceAsStream("assets/crashpipe/crash.wav")) {
             if (is == null) throw new IllegalStateException("Sound resource not present");
             Files.copy(is, SOUND);
         } catch (IOException e) {

@@ -1,0 +1,13 @@
+{
+  "package": "dev.kikugie.crashpipe.mixin",
+  "required": true,
+  "refmap": "mixins.crashpipe.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8.5",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "server": [],
+  "client": [
+    "CrashReportMixin"
+  ]
+}
